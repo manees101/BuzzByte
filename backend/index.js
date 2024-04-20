@@ -15,7 +15,7 @@ const app=express()
 app.use(cookieParser())
 app.use(express.json())
 app.use(bodyParser.json())
-var whitelist = ['https://buzz-byte.netlify.app', 'https://buzz-byte.vercel.app']
+var whitelist = ['https://buzz-byte.netlify.app', 'https://buzzbyte.vercel.app']
 var corsOptions = {
   origin: function (origin, callback) {
     if (whitelist.indexOf(origin) !== -1) {
