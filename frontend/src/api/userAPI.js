@@ -1,11 +1,11 @@
 import axios from "axios"
-const userAPI=axios.create()
+const userAPI=axios.create({baseURL:'https://buzz-byte-server.vercel.app'})
 
 userAPI.getUser=async({token})=>{
     try
     {
         console.log(token)
-       const result=await axios.get("/api/v1/user",{
+       const result=await userAPI.get("/api/v1/user",{
         headers:{
             Authorization:`Bearer ${token}`
         }
@@ -20,7 +20,7 @@ userAPI.getUser=async({token})=>{
 userAPI.getAllUsers=async()=>{
     try
     {
-         const result=await axios.get("/api/v1/user/all")
+         const result=await userAPI.get("/api/v1/user/all")
          return result.data.userList
     }
     catch(err)
@@ -31,7 +31,7 @@ userAPI.getAllUsers=async()=>{
 userAPI.updateUser=async({userData,token})=>{
    try
    {
-    const result=await axios.patch(`/api/v1/user`,userData,{
+    const result=await userAPI.patch(`/api/v1/user`,userData,{
         headers:{
             Authorization:`Bearer ${token}`
         }
@@ -46,7 +46,7 @@ userAPI.updateUser=async({userData,token})=>{
 userAPI.updatePassword=async({password,token})=>{
     try
     {
-        const result=await axios.patch(`/api/v1/user/password`,{password},{
+        const result=await userAPI.patch(`/api/v1/user/password`,{password},{
         headers:{
             Authorization:`Bearer ${token}`
         }

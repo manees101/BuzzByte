@@ -1,9 +1,9 @@
 import axios from "axios";
-const postAPI=axios.create()
+const postAPI=axios.create({baseURL:"https://buzz-byte-server.vercel.app"})
 postAPI.getAllPosts=async()=>{
     try
     {
-       const result=await axios.get("/api/v1/post")
+       const result=await postAPI.get("/api/v1/post")
        return result.data.postList
     }
     catch(err)
@@ -15,7 +15,7 @@ postAPI.getAllPosts=async()=>{
 postAPI.createPost=async({newPost,token})=>{
     try
     {
-       const result=await axios.post("/api/v1/post",newPost,{
+       const result=await postAPI.post("/api/v1/post",newPost,{
         headers:{
             Authorization:`Bearer ${token}`
         },
@@ -30,7 +30,7 @@ postAPI.createPost=async({newPost,token})=>{
 postAPI.updatePost=async({data,id,token})=>{
     try
     {
-      const result=await axios.patch(`/api/v1/post/${id}`,data,{
+      const result=await postAPI.patch(`/api/v1/post/${id}`,data,{
         headers:{
             Authorization:`Bearer ${token}`
         }
@@ -45,7 +45,7 @@ postAPI.updatePost=async({data,id,token})=>{
 postAPI.deletePost=async({id,token})=>{
     try
     {
-     const result= await axios.delete(`/api/v1/post/${id}`,{
+     const result= await postAPI.delete(`/api/v1/post/${id}`,{
         headers:{
             Authorization:`Bearer ${token}`
         }
