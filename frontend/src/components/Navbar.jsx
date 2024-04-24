@@ -16,7 +16,7 @@ const Navbar = () => {
      <div className='mr-20 lg:block hidden'>
         <ul className=' flex items-center gap-10 text-white font-semibold'>
             <li className='cursor-pointer hover:bg-blue-500 p-2 rounded-lg' onClick={()=>{setToggle(false);navigate('/dashboard')}}> {userData?.username} </li>
-            <li  className='cursor-pointer hover:bg-blue-500 p-2 rounded-lg' onClick={()=>{setToggle(false);navigate('/pot/create')}}>Create Posts </li>
+            <li  className='cursor-pointer hover:bg-blue-500 p-2 rounded-lg' onClick={()=>{setToggle(false);navigate('/post/create')}}>Create Posts </li>
             <li  className='cursor-pointer hover:bg-blue-500 p-2 rounded-lg' onClick={()=>{setToggle(false);navigate('/authors')}}> Authors</li>
             {
              userData ? <li  className='cursor-pointer hover:bg-blue-500 p-2 rounded-lg ' onClick={()=>{setToggle(false);navigate('/auth/logout')}}>Logout</li> : <li  className='cursor-pointer p-2 rounded-lg hover:bg-blue-500 ' onClick={()=>{setToggle(false);navigate('/auth/login')}}>Login</li>
