@@ -105,7 +105,9 @@ const Register = () => {
       setErrors((prev)=>({...prev,image:false}))
     }
     const id=v1()+"."+image.name.split(".")[1]
-    await uploadImage({id:id.split(".")[0],image})
+
+    const img=await uploadImage({id:id.split(".")[0],image})
+    console.log(img)
     const result=await authAPI.register({userData:{...userData,Image:id}})
     dispatch(setData({userData:result.userData,token:result.token}))
     navigate("/")
