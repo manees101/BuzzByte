@@ -4,7 +4,6 @@ const userAPI=axios.create({baseURL:'https://buzz-byte-server.vercel.app'})
 userAPI.getUser=async({token})=>{
     try
     {
-        console.log(token)
        const result=await userAPI.get("/api/v1/user",{
         headers:{
             Authorization:`Bearer ${token}`

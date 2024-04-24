@@ -4,7 +4,6 @@ const authAPI=axios.create({baseURL:"https://buzz-byte-server.vercel.app"})
 authAPI.login=async({userData})=>{
     try
     {
-        console.log(userData)
       const result=await authAPI.post("/api/v1/auth/login",{...userData})
       localStorage.setItem("token",result.data.token)
       return result.data

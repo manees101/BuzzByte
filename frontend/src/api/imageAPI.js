@@ -10,9 +10,7 @@ client
 export const uploadImage=async({id,image})=>{
     try
     {
-        console.log(" bucket id ",import.meta.env.VITE_APPWRITE_BUCKET_ID)
-        const promise =await storage.createFile(import.meta.env.VITE_APPWRITE_BUCKET_ID, id,image);
-    console.log(promise) 
+       await storage.createFile(import.meta.env.VITE_APPWRITE_BUCKET_ID, id,image);
     }
     catch(err)
     {
@@ -36,8 +34,7 @@ export const getImage=({id})=>{
 export const deleteImage=async({id})=>{
     try
     {
-       const result= await storage.deleteFile(import.meta.env.VITE_APPWRITE_BUCKET_ID, id);
-       console.log(result) 
+       const result= await storage.deleteFile(import.meta.env.VITE_APPWRITE_BUCKET_ID, id); 
        return
     }
     catch(err)

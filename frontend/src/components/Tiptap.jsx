@@ -204,7 +204,7 @@ const Tiptap = ({content,setContentHtml}) => {
       </button>
      </div>
       <div className="rounded-lg w-full border-solid border-[2px] border-gray-800 ">
-      <EditorContent editor={editor} onInput={()=>{setContentHtml(editor?.getHTML());console.log(editor?.getHTML())}}/>
+      <EditorContent editor={editor} onInput={()=>{setContentHtml(editor?.getHTML())}}/>
       </div>
       
     </div>
