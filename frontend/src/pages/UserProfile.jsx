@@ -87,7 +87,6 @@ const UserProfile = () => {
     setIsEditable(false);
   };
   const handlePasswordChange = async () => {
-    console.log(password,userData?.password)
     const checkPass=await bcryptjs.compare(password,userData?.password)
     if(!checkPass)
     {
@@ -116,7 +115,6 @@ const UserProfile = () => {
     setLoading(true)
     const newPass=await userAPI.updatePassword({password:newPassword,token})
     dispatch(updatePassword({password:newPass}))
-    console.log(newPass)
     setLoading(false)
   };
   useEffect(() => {

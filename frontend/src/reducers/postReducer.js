@@ -14,7 +14,6 @@ const postSlice=createSlice({
          },
         updatePost:(state,action)=>{
             const {postData,id}=action.payload
-            console.log(postData,id)
            state.postList=state?.postList?.map((post)=>(
             post._id===id ? {...post,
             category:postData.category,

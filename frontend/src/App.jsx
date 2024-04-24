@@ -30,7 +30,7 @@ function App() {
   const dispatch = useDispatch();
   useEffect(() => {
     if (!userData) {
-      console.log(token);
+
       userAPI
         .getUser({ token: token })
         .then((data) => dispatch(setData({ token, userData: data })));

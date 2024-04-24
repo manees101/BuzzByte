@@ -50,7 +50,6 @@ const PostDetail = ({}) => {
   const {id}=useParams()
   const postList=useSelector(state=>state.post.postList)
   const post=postList?.filter((post)=>post?._id===id)
-  console.log("post image ",post[0]?.Image)
   const userData=useSelector(state=>state.user.userData)
   const token=useSelector(state=>state.user.token)
   const [showDeleteModal, setShowDeleteModal] = useState(false)
