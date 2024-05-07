@@ -7,7 +7,7 @@ import Author from "./Author";
 const PostCard = ({ id, Image, category, authorId, title, desc }) => {
   const [image, setImage] = useState(null);
 
-  const shortTitle = title.length > 30 ? title.substr(0, 30) + "..." : title;
+  const shortTitle = title.length > 40 ? title.substr(0, 40) + "..." : title;
   const shortDesc =
     desc.length > 150 ? desc.substr(0, 130) + "<span> ...<span/>" : desc;
   const [authorList, setAuthorList] = useState(null);
