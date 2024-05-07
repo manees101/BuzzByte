@@ -18,9 +18,9 @@ const HeadPost = ({ id, Image, title, desc, authorId, category }) => {
   const shortTitle = title.length > 130 ? title.substr(0, 130) + "..." : title;
   const shortDesc =
     desc.length > 340 ? desc.substr(0, 340) + "<span> ...</span>" : desc;
-  const mobileTitle = title.length > 30 ? title.substr(0, 50) + "..." : title;
+  const mobileTitle = title.length > 50 ? title.substr(0, 50) + "..." : title;
   const mobileDesc =
-    desc.length > 50 ? desc.substr(0, 80) + "<span> ...</span>" : desc;
+    desc.length > 50 ? desc.substr(0, 150) + "<span> ...</span>" : desc;
   return author && (
     <div
       className=" p-4 w-[95%] h-[500px] md:h-[400px] bg-slate-900 
