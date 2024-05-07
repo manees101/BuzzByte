@@ -9,7 +9,7 @@ const PostCard = ({ id, Image, category, authorId, title, desc }) => {
 
   const shortTitle = title.length > 30 ? title.substr(0, 30) + "..." : title;
   const shortDesc =
-    desc.length > 100 ? desc.substr(0, 80) + "<span> ...<span/>" : desc;
+    desc.length > 150 ? desc.substr(0, 130) + "<span> ...<span/>" : desc;
   const [authorList, setAuthorList] = useState(null);
   const author = authorList?.filter((author) => author._id === authorId);
   useEffect(() => {
