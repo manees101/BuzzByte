@@ -1,5 +1,6 @@
 import axios from "axios"
 const authAPI=axios.create({baseURL:"https://buzz-byte-server.vercel.app"})
+// const authAPI=axios.create()
 
 authAPI.login=async({userData})=>{
     try
@@ -11,6 +12,7 @@ authAPI.login=async({userData})=>{
     catch(err)
     {
        console.log(err)
+       return err
     }
 }
 
@@ -25,6 +27,7 @@ authAPI.register=async({userData})=>{
     catch(err)
     {
       console.log(err)
+      return err
     }
 }
 
@@ -42,6 +45,7 @@ authAPI.logout=async({token})=>{
    catch(err)
    {
      console.log(err)
+     return err
    }
 }
 

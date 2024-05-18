@@ -107,7 +107,7 @@ const PostDetail = ({}) => {
       </div>
       </div>
       {showDeleteModal && (
-       <DeleteModal handleDelete={handleDelete} setShowDeleteModal={setShowDeleteModal}/>
+       <DeleteModal handleDelete={handleDelete} setShowDeleteModal={setShowDeleteModal} alert={"Are you sure you want to delete this post?"} msg={"deleting the post..."}/>
       )}
     </div>
   )

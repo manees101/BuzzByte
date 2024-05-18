@@ -28,6 +28,7 @@ function App() {
   const userData = useSelector((state) => state.user.userData);
   const postList = useSelector((state) => state.post.postList);
   const dispatch = useDispatch();
+
   useEffect(() => {
     if (!userData) {
 

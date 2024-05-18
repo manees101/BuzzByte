@@ -1,5 +1,6 @@
 import axios from "axios"
 const userAPI=axios.create({baseURL:'https://buzz-byte-server.vercel.app'})
+// const userAPI=axios.create()
 
 userAPI.getUser=async({token})=>{
     try
@@ -55,6 +56,20 @@ userAPI.updatePassword=async({password,token})=>{
     catch(err)
     {
        console.log(err)
+    }
+}
+userAPI.deleteUser=async({token})=>{
+    try
+    {
+      return await userAPI.delete('/api/v1/user',{
+        headers:{
+            Authorization:`Bearer ${token}`
+        }
+      })
+    }
+    catch(err)
+    {
+        console.log(err)
     }
 }
 export default userAPI

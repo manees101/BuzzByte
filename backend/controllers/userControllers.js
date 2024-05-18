@@ -39,8 +39,9 @@ export const updatePassword=async(req,res)=>{
 export const deleteUser=async(req,res)=>{
     const {id}=req.params
     try
-    {0
+    {
         await User.deleteOne({_id:id})
+        res.status(200).json({msg:"user deleted successfully"})
     }
     catch(err)
     {

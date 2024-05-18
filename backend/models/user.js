@@ -18,10 +18,6 @@ const userSchema=new mongoose.Schema({
         type:String,
         required:true
     },
-    posts:{
-        type:Number,
-        default:0
-    },
     Image:{
         type:String
     },

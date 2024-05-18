@@ -2,20 +2,22 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getImage, deleteImage, uploadImage } from "../api/imageAPI";
 import userAPI from "../api/userAPI";
-import { updateUser, updatePassword } from "../reducers/userReducer";
+import { updateUser, updatePassword, deleteUser } from "../reducers/userReducer";
 import { FiEdit } from "react-icons/fi";
-import { useNavigate,useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Loader from "../components/Loader";
-import bcryptjs from "bcryptjs"
-import validator from "validator"
+import bcryptjs from "bcryptjs";
+import validator from "validator";
 import { v1 } from "uuid";
+import DeleteModal from "../components/DeleteModal";
 const UserProfile = () => {
   const [image, setImage] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const userData = useSelector((state) => state.user.userData);
   const token = useSelector((state) => state.user.token);
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [formData, setFormData] = useState({
     name: userData?.name || "",
     username: userData?.username || "",
@@ -25,102 +27,113 @@ const UserProfile = () => {
   const [newPassword, setNewPassword] = useState("");
   const [confPassword, setConfPassword] = useState("");
   const [isEditable, setIsEditable] = useState(false);
-  const [userImage, setUserImage] = useState(null)
-  const {id}=useParams()
-  const [userList, setUserList] = useState(null)
+  const [userImage, setUserImage] = useState(null);
+  const { id } = useParams();
+  const [userList, setUserList] = useState(null);
   const [errors, setErrors] = useState({
-    username:false,
-    email:false,
-    password:false,
-    strongPass:false,
-    confPass:false,
-    image:false,
-    emailFormate:false
-  })
+    username: false,
+    email: false,
+    password: false,
+    strongPass: false,
+    confPass: false,
+    image: false,
+    emailFormate: false,
+  });
+  //handle input change
   const handleChange = (e) => {
     setFormData((prevData) => ({
       ...prevData,
       [e.target.name]: e.target.value,
     }));
   };
-  const handleSubmit = async () => {
-    const checkUsername=userList?.some((user)=>user.username===formData.username&&user._id!==id)
-    if(checkUsername)
-    {
-      return setErrors((prev)=>({...prev,username:true}))
-    }
-    else
-    {
-      setErrors((prev)=>({...prev,username:false}))
-    }
-    if(validator.isEmail(formData.email))
-    {
-      setErrors((prev)=>({...prev,emailFormate:false}))
-      const checkEmail=userList?.some((user)=>user.email===formData.email&&user._id!==id)
-      if(checkEmail)
-      {
-       return setErrors((prev)=>({...prev,email:true}))
-      }
-      else
-      {
-        setErrors((prev)=>({...prev,email:false}))
-      }
-      
-    }
-    else
-    {
-       return setErrors((prev)=>({...prev,emailFormate:true}))
 
+  //user profile update handler
+  const handleSubmit = async () => {
+    const checkUsername = userList?.some(
+      (user) => user.username === formData.username && user._id !== id
+    );
+    if (checkUsername) {
+      return setErrors((prev) => ({ ...prev, username: true }));
+    } else {
+      setErrors((prev) => ({ ...prev, username: false }));
     }
-    if(userImage)
-    {
-      const imgId=v1()+"."+userImage?.name.split(".")[1]
-      await deleteImage({id:userData?.Image?.split(".")[0]})
-      await uploadImage({id:imgId.split(".")[0],image:userImage})
-      await userAPI.updateUser({userData:{...formData,Image:imgId},token})
-      dispatch(updateUser({userData:{...formData,Image:imgId}}))
+    if (validator.isEmail(formData.email)) {
+      setErrors((prev) => ({ ...prev, emailFormate: false }));
+      const checkEmail = userList?.some(
+        (user) => user.email === formData.email && user._id !== id
+      );
+      if (checkEmail) {
+        return setErrors((prev) => ({ ...prev, email: true }));
+      } else {
+        setErrors((prev) => ({ ...prev, email: false }));
+      }
+    } else {
+      setErrors((prev) => ({ ...prev, email: false }));
+      return setErrors((prev) => ({ ...prev, emailFormate: true }));
+    }
+    if (userImage) {
+      const imgId = v1() + "." + userImage?.name.split(".")[1];
+      await deleteImage({ id: userData?.Image?.split(".")[0] });
+      await uploadImage({ id: imgId.split(".")[0], image: userImage });
+      await userAPI.updateUser({
+        userData: { ...formData, Image: imgId },
+        token,
+      });
+      dispatch(updateUser({ userData: { ...formData, Image: imgId } }));
       setIsEditable(false);
-      return;   
+      return;
     }
-    await userAPI.updateUser({userData:{...formData,Image:userData.Image},token})
-    dispatch(updateUser({userData:{...formData}}))
+    await userAPI.updateUser({
+      userData: { ...formData, Image: userData.Image },
+      token,
+    });
+    dispatch(updateUser({ userData: { ...formData } }));
     setIsEditable(false);
   };
+
+  //password change handler
   const handlePasswordChange = async () => {
-    const checkPass=await bcryptjs.compare(password,userData?.password)
-    if(!checkPass)
-    {
-      return setErrors((prev)=>({...prev,password:true}))
-    }
-    else
-    {
-      setErrors((prev)=>({...prev,password:false}))
-      if(!validator.isStrongPassword(newPassword))
-      {
-        return setErrors((prev)=>({...prev,strongPass:true,confPass:false}))
-      }
-      else
-      {
-        setErrors((prev)=>({...prev,strongPass:false}))
-        if(newPassword!==confPassword)
-        {
-          return setErrors((prev)=>({...prev,confPass:true}))
-        }
-        else
-        {
-          setErrors((prev)=>({...prev,confPass:false}))
+    const checkPass = await bcryptjs.compare(password, userData?.password);
+    if (!checkPass) {
+      return setErrors((prev) => ({ ...prev, password: true }));
+    } else {
+      setErrors((prev) => ({ ...prev, password: false }));
+      if (!validator.isStrongPassword(newPassword)) {
+        return setErrors((prev) => ({
+          ...prev,
+          strongPass: true,
+          confPass: false,
+        }));
+      } else {
+        setErrors((prev) => ({ ...prev, strongPass: false }));
+        if (newPassword !== confPassword) {
+          return setErrors((prev) => ({ ...prev, confPass: true }));
+        } else {
+          setErrors((prev) => ({ ...prev, confPass: false }));
         }
       }
     }
-    setLoading(true)
-    const newPass=await userAPI.updatePassword({password:newPassword,token})
-    dispatch(updatePassword({password:newPass}))
-    setLoading(false)
+    setLoading(true);
+    const newPass = await userAPI.updatePassword({
+      password: newPassword,
+      token,
+    });
+    dispatch(updatePassword({ password: newPass }));
+    setLoading(false);
+  };
+
+  //delete User
+  const handleDelete = async () => {
+    await userAPI.deleteUser({ token });
+    dispatch(deleteUser())
+    navigate("/");
   };
   useEffect(() => {
     const img = getImage({ id: userData?.Image?.split(".")[0] });
     setImage(img);
-    userAPI.getAllUsers().then((data)=>setUserList(data.filter((user)=>user._id!=id)))
+    userAPI
+      .getAllUsers()
+      .then((data) => setUserList(data.filter((user) => user._id != id)));
   }, []);
   return !userData ? (
     <div className="w-full h-[80vh] flex flex-col items-center justify-center gap-2">
@@ -129,14 +142,22 @@ const UserProfile = () => {
     </div>
   ) : (
     <div className="w-full min-h-[80vh] bg-gray-700 p-4">
-      <div className="w-full h-[20%] flex items-center justify-center ">
+      <div className="w-full h-[10%] flex justify-end">
+        <button className="w-[80px] h-[40px] bg-red-600 text-white rounded-lg" onClick={()=>setShowDeleteModal(true)}>
+          Delete
+        </button>
+        {
+          showDeleteModal &&<DeleteModal handleDelete={handleDelete} setShowDeleteModal={setShowDeleteModal} alert={"Are you sure you want to delete your account!"} msg={"Deleting your account"}/>
+        }
+      </div>
+      <div className="w-full h-[20%] flex items-center justify-around ">
         <img
           src={image?.href}
           alt={userData.username}
           className="w-[120px] h-[120px] rounded-full bg-red-300"
         />
       </div>
-      <div className="w-full h-[80%] flex md:flex-row flex-col md:gap-0 gap-4">
+      <div className="w-full h-[70%] flex md:flex-row flex-col md:gap-0 gap-4">
         <div className=" w-[100%] md:w-[60%] h-[100%] flex flex-col items-center justify-center gap-4 mt-4">
           <div className="md:w-[60%] w-[100%] h-[80px] flex flex-col gap-2 ">
             <label
@@ -155,7 +176,7 @@ const UserProfile = () => {
               onChange={handleChange}
             />
           </div>
-          <div className=" w-full md:w-[60%] h-[80px] flex flex-col gap-2">
+          <div className=" w-full md:w-[60%] h-[80px] flex flex-col gap-2 mt-4">
             <label
               htmlFor="username"
               className="text-[20px] font-semibold text-white"
@@ -171,12 +192,11 @@ const UserProfile = () => {
               value={formData.username}
               onChange={handleChange}
             />
-            {errors.username && <p className="text-red-600">
-              *This username is not available.
-              </p>}
-              
+            {errors.username && (
+              <p className="text-red-600">*This username is not available.</p>
+            )}
           </div>
-          <div className=" w-full md:w-[60%] h-[80px] flex flex-col gap-2">
+          <div className=" w-full md:w-[60%] h-[80px] flex flex-col gap-2 mt-4">
             <label
               htmlFor="email"
               className="text-[20px] font-semibold text-white"
@@ -192,21 +212,25 @@ const UserProfile = () => {
               value={formData.email}
               onChange={handleChange}
             />
-            {errors.email && <p className="text-red-600">
-              *This email is already taken.
-              </p>}
-              {errors.emailFormate && <p className="text-red-600">
-              *The email formate is not correct.
-              </p>}
+            {errors.email && (
+              <p className="text-red-600">*This email is already taken.</p>
+            )}
+            {errors.emailFormate && (
+              <p className="text-red-600">*The email formate is not correct.</p>
+            )}
           </div>
-          <div className={`${isEditable ? "block":"hidden"}`}>
-           <input type="file" name="image" id="image" onChange={(e)=>{
-             if (e.target.files && e.target.files[0]) {
-              setUserImage(e.target.files[0]);
-            }
-           }}
-           accept=".jpg,.png"
-           />
+          <div className={`${isEditable ? "block" : "hidden"} mt-4`}>
+            <input
+              type="file"
+              name="image"
+              id="image"
+              onChange={(e) => {
+                if (e.target.files && e.target.files[0]) {
+                  setUserImage(e.target.files[0]);
+                }
+              }}
+              accept=".jpg,.png"
+            />
           </div>
           {isEditable ? (
             <button
@@ -244,10 +268,10 @@ const UserProfile = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-           <p className="text-red-600 h-[10%]"> {errors.password && 
-              "*The password is not correct."
-              }
-              </p>
+            <p className="text-red-600 h-[10%]">
+              {" "}
+              {errors.password && "*The password is not correct."}
+            </p>
           </div>
           <div className=" w-full md:w-[60%] h-[80px] flex flex-col gap-2">
             <label
@@ -264,11 +288,10 @@ const UserProfile = () => {
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
             />
-           <p className="text-red-600 h-[20%]"> {errors.strongPass && 
-              "*Please choose a strong password."
-              }
-              </p>
-             
+            <p className="text-red-600 h-[20%]">
+              {" "}
+              {errors.strongPass && "*Please choose a strong password."}
+            </p>
           </div>
           <div className=" w-full md:w-[60%] h-[80px] flex flex-col gap-2">
             <label
@@ -285,10 +308,10 @@ const UserProfile = () => {
               value={confPassword}
               onChange={(e) => setConfPassword(e.target.value)}
             />
-           <p className="text-red-600 h-[20%]">  {errors.confPass && 
-             "*The passwords does not match."
-              }
-              </p>
+            <p className="text-red-600 h-[20%]">
+              {" "}
+              {errors.confPass && "*The passwords does not match."}
+            </p>
           </div>
 
           <button
@@ -297,7 +320,7 @@ const UserProfile = () => {
          items-center w-[150px] bg-blue-500 rounded-lg"
             onClick={handlePasswordChange}
           >
-            {loading ? <p>Submitting...</p> :<p>Change Password</p>}
+            {loading ? <p>Submitting...</p> : <p>Change Password</p>}
           </button>
         </div>
       </div>

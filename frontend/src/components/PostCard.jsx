@@ -37,12 +37,13 @@ const PostCard = ({ id, Image, category, authorId, title, desc }) => {
             {shortTitle}
           </h2>
         </Link>
-        <Link to={`/post/${id}`} className="h-[70%]">
+        <Link to={`/post/${id}`} className="h-[70%] mt-2 text-dimWhite">
           <h2 className=" text-[15px]">{parse(shortDesc)}</h2>
         </Link>
       </div>
       <div className="md:h-[15%] h-[20%] w-[95%] flex justify-between items-center">
-       {author && <Author Image={author[0]?.Image} name={author[0]?.name} username={author[0]?.username}/>}
+       {author && 
+       <Author Image={author[0]?.Image} name={author[0]?.name} username={author[0]?.username} id={author[0]?._id}/>}
         <div className="bg-slate-600 h-[40px] px-4 rounded-lg text-white text-[15px]  md:text-[20px] flex items-center justify-center">
           <Link to={`/post/category/${category}`}>{category}</Link>
         </div>

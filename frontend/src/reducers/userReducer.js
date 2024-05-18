@@ -28,10 +28,16 @@ const userSlice=createSlice({
         updatePassword:(state,action)=>{
           state.userData.password=action.payload.password
           return
+        },
+        deleteUser:(state,action)=>{
+          state.token=null
+          state.userData=null
+          localStorage.removeItem("token")
+          return
         }
     } 
 })
 
-export const {getUser,setData,updatePassword,updateUser,getToken,logout}=userSlice.actions
+export const {getUser,deleteUser,setData,updatePassword,updateUser,getToken,logout}=userSlice.actions
 const userReducer=userSlice.reducer
 export default userReducer

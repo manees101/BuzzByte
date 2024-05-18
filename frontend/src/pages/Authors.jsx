@@ -13,8 +13,8 @@ const Authors = () => {
   </div>:(
     <div className='flex flex-col md:flex-row flex-wrap gap-8 w-[95%] mx-auto my-4 justify-center'>
      {  
-     userList.map(({_id,name,Image,posts})=>(
-       <AuthorCard {...{id:_id,name,Image,posts}} key={_id}/>
+     userList.map(({_id,name,Image,username})=>(
+       <AuthorCard {...{id:_id,name,Image,username}} key={_id}/>
       ))
      }
     </div>

@@ -1,14 +1,19 @@
 import React,{useState,useEffect} from 'react'
 import { Link } from 'react-router-dom'
 import { getImage } from '../api/imageAPI'
+import { useSelector } from 'react-redux'
 const AuthorCard = ({
     id,
     Image,
     name,
-    posts
+    username
 
 }) => {
 const [image, setImage] = useState(null)
+const postList=useSelector(state=>state.post.postList)
+const posts=postList?.filter((post)=>post.authorId===id).length
+
+
 useEffect(()=>{
   const data=getImage({id:Image.split(".")[0]})
   setImage(data)
@@ -25,10 +30,13 @@ useEffect(()=>{
         <h1 className='font-bold text-[20px] md:text[30px] text-white'>
             {name}
         </h1>
+        <h2 className='font-semibold text-[15px] md:text[20px] text-dimWhite'>
+           @{username}
+        </h2>
         </Link>
        <Link to={`/author/posts/${id}`}>
        <p className='text-white'>
-            {posts}
+           Posts: {posts}
         </p>
        </Link>
        

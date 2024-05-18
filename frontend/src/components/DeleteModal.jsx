@@ -1,12 +1,12 @@
 import React,{useState} from 'react'
 import Loader from './Loader'
-const DeleteModal = ({handleDelete,setShowDeleteModal}) => {
+const DeleteModal = ({handleDelete,setShowDeleteModal,alert,msg}) => {
   const [showLoader, setShowLoader] = useState(false)
   return (
     <div className='fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black bg-opacity-50'>
      {!showLoader &&
       <div className='bg-white p-8 rounded-lg'>
-      <p className='text-black text-lg mb-4'>Are you sure you want to delete this post?</p>
+      <p className='text-black text-lg mb-4'>{alert}</p>
       <div className='flex justify-center'>
         <button
           className='bg-red-600 text-white px-4 py-2 rounded mr-4 flex gap-2'
@@ -26,7 +26,7 @@ const DeleteModal = ({handleDelete,setShowDeleteModal}) => {
    
     {showLoader && 
     <div className='bg-white p-8 rounded-lg flex flex-col gap-2 justify-center items-center'>
-      <p className='text-black text-lg mb-4'>deleting the post...</p>
+      <p className='text-black text-lg mb-4'>{msg}</p>
       <Loader color={'text-red-800'} h={8} w={8}/>
       </div>
       }

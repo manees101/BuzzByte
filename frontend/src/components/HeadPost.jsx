@@ -15,9 +15,9 @@ const HeadPost = ({ id, Image, title, desc, authorId, category }) => {
     userAPI.getAllUsers().then((data) => setAuthorList(data));
   }, []);
 
-  const shortTitle = title.length > 130 ? title.substr(0, 130) + "..." : title;
+  const shortTitle = title.length > 230 ? title.substr(0, 130) + "..." : title;
   const shortDesc =
-    desc.length > 340 ? desc.substr(0, 340) + "<span> ...</span>" : desc;
+    desc.length > 340 ? desc.substr(0, 800) + "<span> ...</span>" : desc;
   const mobileTitle = title.length > 50 ? title.substr(0, 50) + "..." : title;
   const mobileDesc =
     desc.length > 50 ? desc.substr(0, 150) + "<span> ...</span>" : desc;
@@ -44,7 +44,7 @@ const HeadPost = ({ id, Image, title, desc, authorId, category }) => {
               {mobileTitle}
             </h2>
           </Link>
-          <Link to={`/post/${id}`} className="max-h-[60%]">
+          <Link to={`/post/${id}`} className="max-h-[60%] md:mt-4 mt-2 text-dimWhite">
             <h2 className="text-[15px] hidden md:block overflow-hidden">
               {parse(shortDesc)}
             </h2>
@@ -67,7 +67,7 @@ const HeadPost = ({ id, Image, title, desc, authorId, category }) => {
             </h3>
             </div>
           </div> */}
-          {author && <Author Image={author[0]?.Image} name={author[0]?.name} username={author[0]?.username}/>}
+          {author && <Author Image={author[0]?.Image} name={author[0]?.name} username={author[0]?.username} id={author[0]?._id}/>}
 
           <div className="bg-slate-600 w-[30%] h-[40px] px-4 rounded-lg text-white text-[15px]  md:text-[20px] flex items-center justify-center">
            <Link to={`/post/category/${category}`}>

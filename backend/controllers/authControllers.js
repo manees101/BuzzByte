@@ -20,14 +20,15 @@ export const login=async(req,res)=>{
        const userData=await User.findOne({username})
        if(userData)
        {
-        if(bcryptjs.compare(password,userData.password))
+        const checkPassword=await bcryptjs.compare(password,userData.password)
+        if(checkPassword)
         {
            const token=await userData.generateToken()
            res.status(200).json({userData,token})
         }
         else
         {
-         res.status(400).json({msg:"password is not "})
+         res.status(400).json({msg:"password is not correct"})
         }
        }
        else

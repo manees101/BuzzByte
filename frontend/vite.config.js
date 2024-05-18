@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [react()],
   server:{
     proxy:{
-      // "/api":"https://buzz-byte-server.vercel.app"
+      // "/api":"http://localhost:5000"
     }
    
   }

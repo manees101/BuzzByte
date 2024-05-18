@@ -1,5 +1,7 @@
 import axios from "axios";
 const postAPI=axios.create({baseURL:"https://buzz-byte-server.vercel.app"})
+// const postAPI=axios.create()
+
 postAPI.getAllPosts=async()=>{
     try
     {

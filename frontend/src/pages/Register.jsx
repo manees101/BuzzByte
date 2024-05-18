@@ -7,9 +7,11 @@ import { setData } from '../reducers/userReducer'
 import { uploadImage } from '../api/imageAPI'
 import { v1 } from 'uuid'
 import validator from "validator"
+import Loader from '../components/Loader'
 const Register = () => {
   const navigate=useNavigate()
   const dispatch=useDispatch()
+  const [isLoading, setIsLoading] = useState(false)
   const [userData, setUserData] = useState({
     name:"",
     email:"",
@@ -37,8 +39,10 @@ const Register = () => {
      }
   }
   const handleSubmit=async()=>{
+    setIsLoading(true)
     if(userData.name==="")
     {
+      setIsLoading(false)
      return setErrors((prev)=>({...prev,name:true}))
     }
     else
@@ -47,6 +51,7 @@ const Register = () => {
     }
     if(userData.email==="")
     {
+      setIsLoading(false)
       setErrors((prev)=>({...prev,emailFormate:false}))
       return setErrors((prev)=>({...prev,email:true}))
     }
@@ -55,6 +60,7 @@ const Register = () => {
       setErrors((prev)=>({...prev,email:false}))
       if(!validator.isEmail(userData.email))
       {
+        setIsLoading(false)
           return setErrors((prev)=>({...prev,emailFormate:true}))
       }
       else
@@ -65,43 +71,53 @@ const Register = () => {
     }
     if(userData.username==="")
     {
+      setIsLoading(false)
       return setErrors((prev)=>({...prev,username:true}))
     }
     else
     {
+    
       setErrors((prev)=>({...prev,username:false}))
     }
     if(userData.password==="")
     {
+      setIsLoading(false)
      return setErrors((prev)=>({...prev,password:true}))
     }
     else
     {
+      
       setErrors((prev)=>({...prev,password:false}))
     }
     if(!validator.isStrongPassword(userData.password))
     {
+      setIsLoading(false)
      return setErrors((prev)=>({...prev,password:true}))
     }
     else
     {
+      
       setErrors((prev)=>({...prev,password:false}))
     }
     if(userData.confPass!==userData.password)
     {
+      setIsLoading(false)
      return setErrors((prev)=>({...prev,confPass:true}))
     }
     else
     {
+      
       setErrors((prev)=>({...prev,confPass:false}))
     }
     
     if(!image)
     {
+      setIsLoading(false)
      return setErrors((prev)=>({...prev,image:true}))
     }
     else
     {
+      
       setErrors((prev)=>({...prev,image:false}))
     }
     const id=v1()+"."+image.name.split(".")[1]
@@ -110,6 +126,7 @@ const Register = () => {
     console.log(img)
     const result=await authAPI.register({userData:{...userData,Image:id}})
     dispatch(setData({userData:result.userData,token:result.token}))
+    setIsLoading(false)
     navigate("/")
   }
   return (
@@ -184,11 +201,13 @@ const Register = () => {
     <div className='mt-2'>
        <button className='text-[15px] font-semibold md:text[20px] w-[120px] 
        h-[40px] text-white bg-slate-800 rounded-lg
-       shadow-md shadow-slate-500
+       shadow-md shadow-slate-500 flex justify-center items-center gap-2
        '
        onClick={handleSubmit}
        >
-        Register
+       {isLoading ? <div className="h-5 w-5 flex">
+            <Loader h={'full'} w={'full'} color={'text-dimWhite'}/>
+          </div>:""} Register
        </button>
        <h2 className='mt-4'>
         Already have an account <span className='text-slate-800 text-[15px] font-bold underline '>
