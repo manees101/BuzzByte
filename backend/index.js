@@ -15,6 +15,9 @@ const app=express()
 app.use(cookieParser())
 app.use(express.json())
 app.use(bodyParser.json())
+app.get('/',(req,res)=>{
+  res.json("Hellow from server")
+})
 var whitelist = ['https://buzz-byte.netlify.app', 'https://buzzbyte.vercel.app','https://buzz-byte-server.vercel.app']
 var corsOptions = {
   origin: function (origin, callback) {
@@ -26,9 +29,7 @@ var corsOptions = {
   }
 }
 app.use(cors(corsOptions))
-app.get('/',(req,res)=>{
-    res.json("Hellow from server")
-})
+
 app.use("/api/v1/auth",authRouter)
 app.use("/api/v1/user",userRouter)
 app.use("/api/v1/post",postRouter)
