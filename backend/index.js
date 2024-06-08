@@ -9,7 +9,7 @@ import connectDB from "./db/connect.js"
 import cookieParser from "cookie-parser"
 import bodyParser from "body-parser"
 import cors from "cors"
-const PORT=process.env.PORT || 4000
+const PORT=process.env.PORT || 8000
 const DB_URI=process.env.MONGO_URI
 const app=express()
 app.use(cookieParser())
