@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useEffect, useState} from 'react'
 import { useSelector } from 'react-redux'
 import { DummyPosts } from '../constants/data'
 import { PostCard } from '../components'
@@ -6,6 +6,8 @@ import ReactPaginate from 'react-paginate';
 import {BsChevronLeft,BsChevronRight} from "react-icons/bs"
 import {motion} from "framer-motion"
 import { useParams } from 'react-router-dom';
+import userAPI from '../api/userAPI';
+import Loader from '../components/Loader';
 const AuthorPosts = () => {
   const postList=useSelector(state=>state.post.postList)
   const paginateVariant={
@@ -31,6 +33,7 @@ const AuthorPosts = () => {
   const idxOfLastPost = currentPage * itemsPerPage;
   const idxOfFirstPost = idxOfLastPost - itemsPerPage;
   const pageCount = Math.ceil(posts?.length / itemsPerPage);
+  const [user, setUser] = useState(null)
     const currentPosts = posts?.slice(
     idxOfFirstPost,
     idxOfLastPost
@@ -40,12 +43,23 @@ const AuthorPosts = () => {
     const newOffset = (event.selected + 1);
     setCurrentPage(newOffset)
   };
-  return currentPosts && (
+  useEffect(()=>{
+    if(!user)
+      {
+        userAPI.getUserById(id).then((data)=>setUser(data))
+      }
+  })
+  return !currentPosts ?  <div className='h-[80vh] w-full flex flex-col gap-2 items-center justify-center'>
+  <Loader h={10} w={10} color={'text-blue-600'}/>
+  Loading...
+</div>: (
     <>
-    
+     <h1 className='text-[20px] md:text-[25px] font-bold m-4'>
+      {user && user.name} Posts
+     </h1>
     <div className='flex flex-col md:flex-row gap-4 h-[100%] w-[100%] p-10 flex-wrap md:justify-evenly'>
       {
-        currentPosts.map(({_id,category,Image,title,desc,authorId},index)=>{
+        currentPosts?.map(({_id,category,Image,title,desc,authorId},index)=>{
             return <PostCard id={_id} category={category} title={title} Image={Image} desc={desc} authorId={authorId}  key={_id}/>
         })
       }
@@ -71,6 +85,7 @@ const AuthorPosts = () => {
       onPageChange={handlePageClick}
       />
     </motion.div>
+   
     </>
   )
 }

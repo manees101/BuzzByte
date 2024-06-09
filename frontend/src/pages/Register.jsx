@@ -132,7 +132,7 @@ const Register = () => {
   return (
     <div className='w-full h-screen bg-slate-400 flex flex-grow md:items-center'>
     <div className=' w-full h-[100%] md:w-[60%] md:h-[60%] md:mx-auto flex flex-col p-6 rounded-lg'>
-   <div className='w-full h-[40%] md:h-[90%] flex flex-col flex-wrap gap-8 '>
+   <div className='w-full h-[90%] flex flex-col flex-wrap gap-8 '>
    <div className='md:w-[400px] w-[95%] h-20 flex flex-col gap-2  '>
       <label htmlFor="name" className='textBase '>Name</label>
       <input type="text" name='name' id='name' value={userData.name}

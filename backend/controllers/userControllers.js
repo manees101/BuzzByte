@@ -49,6 +49,21 @@ export const deleteUser=async(req,res)=>{
     }
 }
 
+export const getUserById=async(req,res)=>{
+    try
+    {
+       const user=await User.findById(req.params.id).select("name username")
+       res.status(200).json({
+        user
+       })
+    }
+    catch(err)
+    {
+    res.status(500).json({
+        msg:err.message
+    })
+    }
+}
 export const getAllusers=async(req,res)=>{
     try
     {

@@ -1,17 +1,33 @@
 import axios from "axios";
 const postAPI=axios.create({baseURL:"https://buzz-byte-server.vercel.app"})
-// const postAPI=axios.create()
+// const postAPI=axios.create({baseURL:"http://localhost:8000"})
 
 postAPI.getAllPosts=async()=>{
     try
     {
-       const result=await postAPI.get("/api/v1/post")
+       const result=await postAPI.get("/api/v1/post/all")
        return result.data.postList
     }
     catch(err)
     {
        console.log(err)
     }
+}
+
+postAPI.getUserPosts=async(token)=>{
+  try
+  {
+    const result=await postAPI.get("/",{
+      headers:{
+        Authorization:`Bearer ${token}`
+      }
+    })
+    return result.data.postList
+  }
+  catch(err)
+  {
+    console.log(err)
+  }
 }
 
 postAPI.createPost=async({newPost,token})=>{

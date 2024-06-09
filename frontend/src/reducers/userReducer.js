@@ -3,7 +3,8 @@ const userSlice=createSlice({
   name:"user",
     initialState:{
         userData:null,
-        token:null
+        token:null,
+        posts:null
     },
     reducers:{
         setData:(state,action)=>{
@@ -25,6 +26,9 @@ const userSlice=createSlice({
           state.userData=null
           return
         },
+        setPosts:(state,action)=>{
+         return state.posts=action.payload.postList
+        },
         updatePassword:(state,action)=>{
           state.userData.password=action.payload.password
           return
@@ -38,6 +42,6 @@ const userSlice=createSlice({
     } 
 })
 
-export const {getUser,deleteUser,setData,updatePassword,updateUser,getToken,logout}=userSlice.actions
+export const {getUser,deleteUser,setData,updatePassword,updateUser,setPosts,getToken,logout}=userSlice.actions
 const userReducer=userSlice.reducer
 export default userReducer

@@ -5,7 +5,8 @@ import { PostCard } from '../components'
 import ReactPaginate from 'react-paginate';
 import {BsChevronLeft,BsChevronRight} from "react-icons/bs"
 import {motion} from "framer-motion"
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import Loader from '../components/Loader';
 const CategoryPosts = () => {
   const postList=useSelector(state=>state.post.postList)
   const {id}=useParams()
@@ -42,14 +43,20 @@ const CategoryPosts = () => {
   };
 
 
-  return !currentPosts?.length ? <div
+  return !postList ? <div className='h-[80vh] w-full flex flex-col gap-2 items-center justify-center'>
+  <Loader h={10} w={10} color={'text-blue-600'}/>
+  Loading...
+</div> : !currentPosts?.length ? <div
   className='w-full h-[80vh] flex items-center justify-center'
   >
     <h1 className='font-semibold text-[40px] md:text-[50px]'>No posts found!</h1>
   </div>:<>
+      <h1 className='text-[20px] md:text-[25px] font-bold m-4'>
+      {id.toUpperCase()} Posts
+      </h1>
       <div className='flex flex-col md:flex-row gap-4 h-[100%] w-[100%] p-10 flex-wrap md:justify-evenly'>
         {
-          currentPosts.map(({_id,category,Image,title,desc,authorId},index)=>{
+          currentPosts.map(({_id,category,Image,title,desc,authorId})=>{
               return <PostCard id={_id} category={category} title={title} Image={Image} desc={desc} authorId={authorId}  key={_id}/>
           })
         }

@@ -9,6 +9,7 @@ import connectDB from "./db/connect.js"
 import cookieParser from "cookie-parser"
 import bodyParser from "body-parser"
 import cors from "cors"
+import morgan from "morgan"
 const PORT=process.env.PORT || 8000
 const DB_URI=process.env.MONGO_URI
 const app=express()
@@ -29,7 +30,7 @@ var corsOptions = {
   }
 }
 app.use(cors(corsOptions))
-
+app.use(morgan())
 app.use("/api/v1/auth",authRouter)
 app.use("/api/v1/user",userRouter)
 app.use("/api/v1/post",postRouter)

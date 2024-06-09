@@ -17,7 +17,7 @@ import {
   PostDetail,
 } from "./pages";
 import { useDispatch, useSelector } from "react-redux";
-import { setData } from "./reducers/userReducer";
+import { setData, setPosts } from "./reducers/userReducer";
 import userAPI from "./api/userAPI";
 import { Routes, Route, BrowserRouter, Navigate } from "react-router-dom";
 import { useEffect } from "react";
@@ -31,11 +31,13 @@ function App() {
 
   useEffect(() => {
     if (!userData) {
-
       userAPI
         .getUser({ token: token })
         .then((data) => dispatch(setData({ token, userData: data })));
-    }
+      postAPI.getUserPosts(token)
+      .then((data)=>dispatch(setPosts({postList:data})))
+    } 
+   
     if (!postList) {
       postAPI
         .getAllPosts()

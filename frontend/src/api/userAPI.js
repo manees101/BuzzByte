@@ -1,6 +1,6 @@
 import axios from "axios"
 const userAPI=axios.create({baseURL:'https://buzz-byte-server.vercel.app'})
-// const userAPI=axios.create()
+// const userAPI=axios.create({baseURL:"http://localhost:8000"})
 
 userAPI.getUser=async({token})=>{
     try
@@ -26,6 +26,18 @@ userAPI.getAllUsers=async()=>{
     catch(err)
     {
        console.log(err)
+    }
+}
+
+userAPI.getUserById=async(id)=>{
+    try
+    {
+      const result=await userAPI.get(`/api/v1/user/getUser/${id}`)
+      return result.data.user
+    }
+    catch(err)
+    {
+        console.log(err)
     }
 }
 userAPI.updateUser=async({userData,token})=>{

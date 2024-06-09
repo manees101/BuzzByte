@@ -40,11 +40,25 @@ export const deletePost=async(req,res)=>{
 export const getAllPosts=async(req,res)=>{
     try
     {
-       const postList=await Post.find()
+       const postList=await Post.find({status:1})
        res.status(200).json({postList})
     }
     catch(err)
     {
         res.status(500).json({msg:"Internal server error"})
     }
+}
+
+export const getUserPosts=async(req,res)=>{
+  try
+  {
+     const postList=await Post.find({authorId:req.params.id})
+     res.status(200).json({
+      postList
+     })
+  }
+  catch(err)
+  {
+    res.status(500).json({msg:"Internal server error"})
+  }
 }
