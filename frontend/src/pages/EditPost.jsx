@@ -167,11 +167,12 @@ const EditPost = () => {
      border-solid border-[2px] border-black text-[10px] md:text-[15px]"
               onChange={(e) => setStatus(e.target.value)}
             >
-              <option value={0} className="">
-                Inactive
-              </option>
+              
               <option value={1} className="">
                 Active
+              </option>
+              <option value={0} className="">
+                Inactive
               </option>
             </select>
           </div>
