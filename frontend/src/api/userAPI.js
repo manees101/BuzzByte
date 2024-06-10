@@ -1,6 +1,6 @@
 import axios from "axios"
-const userAPI=axios.create({baseURL:'https://buzz-byte-server.vercel.app'})
-// const userAPI=axios.create({baseURL:"http://localhost:8000"})
+// const userAPI=axios.create({baseURL:'https://buzz-byte-server.vercel.app'})
+const userAPI=axios.create({baseURL:"http://localhost:7000"})
 
 userAPI.getUser=async({token})=>{
     try

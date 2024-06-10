@@ -104,8 +104,9 @@ const CreatePost = () => {
     <div className="w-full flex flex-col gap-4 pt-4">
       <div className="w-full ">
         <button
+         disabled={isLoading}
           type="submit"
-          className="  w-[120px] h-10 bg-blue-600 text-white rounded-lg 
+          className="  w-[120px] h-10 bg-blue-600 disabled:bg-gray-500 text-white rounded-lg 
         font-bold text-[20px] float-right mr-4 shadow-lg shadow-slate-400 flex items-center justify-center gap-2"
           onClick={handleSubmit}
         >

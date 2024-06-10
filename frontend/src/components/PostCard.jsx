@@ -38,7 +38,7 @@ const PostCard = ({ id, Image, category, authorId, title, desc }) => {
           </h2>
         </Link>
         <Link to={`/post/${id}`} className="h-[70%] mt-2 text-dimWhite">
-          {parse(shortDesc)}
+          <div className=" text-[15px]">{parse(shortDesc)}</div>
         </Link>
       </div>
       <div className="md:h-[15%] h-[20%] w-[95%] flex justify-between items-center">

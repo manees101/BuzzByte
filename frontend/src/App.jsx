@@ -35,7 +35,7 @@ function App() {
         .getUser({ token: token })
         .then((data) => dispatch(setData({ token, userData: data })));
       postAPI.getUserPosts(token)
-      .then((data)=>dispatch(setPosts({postList:data})))
+      .then((data)=> dispatch(setPosts({postList:data})))
     } 
    
     if (!postList) {

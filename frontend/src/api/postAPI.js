@@ -1,6 +1,6 @@
 import axios from "axios";
-const postAPI=axios.create({baseURL:"https://buzz-byte-server.vercel.app"})
-// const postAPI=axios.create({baseURL:"http://localhost:8000"})
+// const postAPI=axios.create({baseURL:"https://buzz-byte-server.vercel.app"})
+const postAPI=axios.create({baseURL:"http://localhost:7000"})
 
 postAPI.getAllPosts=async()=>{
     try
@@ -17,7 +17,7 @@ postAPI.getAllPosts=async()=>{
 postAPI.getUserPosts=async(token)=>{
   try
   {
-    const result=await postAPI.get("/",{
+    const result=await postAPI.get("/api/v1/post",{
       headers:{
         Authorization:`Bearer ${token}`
       }

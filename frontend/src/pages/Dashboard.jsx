@@ -6,11 +6,11 @@ import { CgProfile } from "react-icons/cg";
 import { FaEye } from "react-icons/fa";
 import { FiPlusCircle,FiEdit  } from "react-icons/fi";
 import Loader from "../components/Loader";
-import postAPI from "../api/postAPI";
 const Dashboard = () => {
   const userData = useSelector((state) => state.user.userData);
   const [image, setImage] = useState(null);
   const postList=useSelector(state=>state.user.posts)
+  console.log(postList)
   const posts=postList?.filter((post)=>post.authorId===userData?._id)
   useEffect(() => {
     const img = getImage({ id: userData?.Image.split(".")[0] });

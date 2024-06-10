@@ -45,12 +45,12 @@ const HeadPost = ({ id, Image, title, desc, authorId, category }) => {
             </h2>
           </Link>
           <Link to={`/post/${id}`} className="max-h-[60%] md:mt-4 mt-2 text-dimWhite">
-            <h2 className="text-[15px] hidden md:block overflow-hidden">
+            <div className="text-[15px] hidden md:block overflow-hidden">
               {parse(shortDesc)}
-            </h2>
-            <h2 className="text-[15px] md:hidden block overflow-hidden">
+            </div>
+            <div className="text-[15px] md:hidden block overflow-hidden">
               {parse(mobileDesc)}
-            </h2>
+            </div>
           </Link>
         </div>
         <div className="h-[30%] w-[95%] flex justify-between items-center">

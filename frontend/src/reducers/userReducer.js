@@ -27,7 +27,8 @@ const userSlice=createSlice({
           return
         },
         setPosts:(state,action)=>{
-         return state.posts=action.payload.postList
+          state.posts=action.payload.postList
+           return
         },
         updatePassword:(state,action)=>{
           state.userData.password=action.payload.password

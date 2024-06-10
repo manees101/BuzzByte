@@ -19,7 +19,7 @@ app.use(bodyParser.json())
 app.get('/',(req,res)=>{
   res.json("Hellow from server")
 })
-var whitelist = ['https://buzz-byte.netlify.app', 'https://buzzbyte.vercel.app','https://buzz-byte-server.vercel.app']
+var whitelist = ['https://buzz-byte.netlify.app', 'https://buzzbyte.vercel.app','https://buzz-byte-server.vercel.app','http://localhost:5174']
 var corsOptions = {
   origin: function (origin, callback) {
     if (whitelist.indexOf(origin) !== -1) {
@@ -30,7 +30,7 @@ var corsOptions = {
   }
 }
 app.use(cors(corsOptions))
-app.use(morgan())
+app.use(morgan("tiny"))
 app.use("/api/v1/auth",authRouter)
 app.use("/api/v1/user",userRouter)
 app.use("/api/v1/post",postRouter)
