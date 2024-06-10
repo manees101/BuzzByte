@@ -19,7 +19,7 @@ app.use(bodyParser.json())
 app.get('/',(req,res)=>{
   res.json("Hellow from server")
 })
-var whitelist = ['https://buzz-byte.netlify.app', 'https://buzzbyte.vercel.app','https://buzz-byte-server.vercel.app','http://localhost:5174']
+var whitelist = ['https://buzz-byte.netlify.app', 'https://buzzbyte.vercel.app','https://buzz-byte-server.vercel.app']
 var corsOptions = {
   origin: function (origin, callback) {
     if (whitelist.indexOf(origin) !== -1) {
